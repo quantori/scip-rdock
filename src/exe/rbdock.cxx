@@ -26,6 +26,7 @@ using std::setw;
 #include "RbtSFFactory.h"
 #include "RbtTransformFactory.h"
 #include "RbtRand.h"
+#include <cstring>
 #include "RbtModelError.h"
 #include "RbtDockingError.h"
 #include "RbtLigandError.h"
@@ -65,7 +66,7 @@ void PrintUsage(void)
 int main(int argc, const char* argv[])
 {
 	cout.setf(ios_base::left,ios_base::adjustfield);
-
+    std::string conf = "";
 	//Strip off the path to the executable, leaving just the file name
 	RbtString strExeName(argv[0]);
 	RbtString::size_type i = strExeName.rfind("/");
@@ -492,13 +493,18 @@ int main(int argc, const char* argv[])
               delete histr.str();
               spWS->SetHistorySink(spHistoryFileSink);
             }
-            spWS->Run();//Dock!
+            spWS->Run(); //Dock!
 	    RbtBool bterm = spfilter->Terminate();
 	    RbtBool bwrite = spfilter->Write();
 	    if (bterm)
 	      bTargetMet = true;
 	    if (bOutput && bwrite) {
 	      spWS->Save();
+          RbtStringList lst = spWS->GetConf();
+          for(auto i:lst)
+              conf = conf + i + "\n";
+          cout << "Сonformation " << iRun << " " << "SCORE: " << spWS->Scores() << std::endl;
+          spWS->ClearCache();
 	    }
 	    iRun++;
           }

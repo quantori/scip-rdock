@@ -49,10 +49,13 @@ class RbtBiMolWorkSpace : public RbtWorkSpace
 		void SetSolvent(RbtModelList solventList);
 		void RemoveSolvent();
         void UpdateModelCoordsFromChromRecords(RbtBaseMolecularFileSource* pSource, RbtInt iTrace);
-        
+
+        void ClearCache();
 		//Model I/O
 		//Saves ligand to file sink
+        RbtStringList GetConf();
 		virtual void Save(RbtBool bSaveScores=true);
+        std::string Scores(RbtBool bSaveScores=true);
 		virtual void SaveHistory(RbtBool bSaveScores=true);
 
 	protected:
@@ -69,6 +72,8 @@ class RbtBiMolWorkSpace : public RbtWorkSpace
 		RbtBiMolWorkSpace(const RbtBiMolWorkSpace&);//Copy constructor disabled by default		
 		RbtBiMolWorkSpace& operator=(const RbtBiMolWorkSpace&);//Copy assignment disabled by default
 		void SaveLigand(RbtMolecularFileSinkPtr spSink, RbtBool bSaveScores=true);
+        RbtStringList GetConform(RbtMolecularFileSinkPtr spSink);
+        std::string GetScores(RbtMolecularFileSinkPtr spSink, RbtBool bSaveScores=true);
 		
 	protected:
 		////////////////////////////////////////

@@ -42,9 +42,10 @@ class RbtBaseFileSink
   void SetFileName(const RbtString& fileName);
   RbtBool StatusOK() {return Status().isOK();}
   RbtError Status();
-
+  RbtStringList GetList();
   //PURE VIRTUAL - MUST BE OVERRIDDEN IN DERIVED CLASSES
   virtual void Render() throw (RbtError) = 0;
+  void ClearCache();
 
  protected:
   ////////////////////////////////////////
@@ -76,7 +77,7 @@ class RbtBaseFileSink
 
   void Open(RbtBool bAppend=false) throw (RbtError);
   void Close();
-  void ClearCache();
+
 
 
  protected:

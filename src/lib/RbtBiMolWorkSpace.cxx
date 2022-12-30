@@ -9,7 +9,8 @@
 * the University of Barcelona.
 * http://rdock.sourceforge.net/
 ***********************************************************************/
-
+#include "iostream"
+#include "vector"
 #include "RbtBiMolWorkSpace.h"
 #include "RbtBaseSF.h"
 #include "RbtAnnotationHandler.h"
@@ -121,10 +122,62 @@ void RbtBiMolWorkSpace::Save(RbtBool bSaveScores) {
   SaveLigand(GetSink(),bSaveScores);
 }
 
+RbtStringList RbtBiMolWorkSpace::GetConf()
+{
+    return GetConform(GetSink());
+}
+
 //Model I/O
 //Saves ligand to history file sink
 void RbtBiMolWorkSpace::SaveHistory(RbtBool bSaveScores) {
   SaveLigand(GetHistorySink(),bSaveScores);
+}
+
+std::string RbtBiMolWorkSpace::Scores(RbtBool bSaveScores){
+    return GetScores(GetSink(),bSaveScores);
+}
+
+
+std::string RbtBiMolWorkSpace::GetScores(RbtMolecularFileSinkPtr spSink, RbtBool bSaveScores) {
+    if (spSink.Null()) //Check we have a valid sink
+        return;
+    RbtModelPtr spLigand(GetLigand());
+    if (spLigand.Null()) //Check we have a ligand
+        return;
+
+    RbtBaseSF *pSF(GetSF());
+    //If we have a scoring function, clear any current score data
+    if (pSF) {
+        RbtString strSFName(pSF->GetFullName());
+        spLigand->ClearAllDataFields(strSFName);
+        spLigand->ClearAllDataFields(RbtAnnotationHandler::_ANNOTATION_FIELD);
+    }
+
+    if (bSaveScores && pSF) {
+        RbtStringVariantMap scoreMap;
+        pSF->ScoreMap(scoreMap);
+        std::string data;
+        for (RbtStringVariantMapConstIter vIter = scoreMap.begin(); vIter != scoreMap.end(); vIter++) {
+            data = std::string((*vIter).second);
+            return data;
+        }
+    }
+}
+
+void RbtBiMolWorkSpace::ClearCache()
+{
+    GetSink()->ClearCache();
+}
+
+RbtStringList RbtBiMolWorkSpace::GetConform(RbtMolecularFileSinkPtr spSink)
+{
+    if (spSink.Null()) //Check we have a valid sink
+        return;
+    RbtModelPtr spLigand(GetLigand());
+    if (spLigand.Null()) //Check we have a ligand
+        return;
+    spSink->SetModel(spLigand);
+    return spSink->GetList();
 }
 
 //Private method to save ligand to file sink, optionally with score attached

@@ -5,7 +5,7 @@
 SRCDIR		= ../src/exe
 UNITTESTDIR	= ./test
 DEPLIBS		= $(LIBDIR)/libRbt.so
-LINKLIBS	= -lRbt -lm -lpopt
+LINKLIBS	= -lRbt -lm -lpopt -L$(POPT_DIR)/lib -Wl,-rpath,$(POPT_DIR)/lib
 
 CC		= $(TMAKE_CC)
 CFLAGS		= $(TMAKE_CFLAGS_CONFIG)

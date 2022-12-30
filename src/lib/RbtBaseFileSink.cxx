@@ -46,6 +46,10 @@ void RbtBaseFileSink::SetFileName(const RbtString& fileName)
   m_strFileName = fileName;
 }
 
+RbtStringList RbtBaseFileSink::GetList()
+{
+    return m_lineRecs;
+}
 
 RbtError RbtBaseFileSink::Status()
 {
