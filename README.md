@@ -1,12 +1,20 @@
-# rDOCK BUILD INSTRUCTIONS
+# rDOCK
 
-```
-In this file you have the basic commands for installing rDock in 32- or 64-bits linux computers.
- For a more detailed explanation, please open the Getting Started guide or full documentation 
- in our webpage or in docs folder.
-```
+rDock is a fast and versatile Open Source docking program that can be used to dock small molecules against proteins and nucleic acids. 
 
-## BACKGROUND
+## Bundle
+
+This fork of rDock adds changes that allow it to run as a part of Quantori DockingFactory. The head project of DockingFactory is [DockingFactory Bundle](https://github.com/quantori/scip-dockingfactory-bundle). Other projects that are also parts of the bundle are:
+- [DockingFactory](https://github.com/quantori/scip-dockingfactory)
+- [DockingInterface](https://github.com/quantori/scip-dockinginterface)
+- [Vina](https://github.com/quantori/scip-vina)
+- [QVina 2](https://github.com/quantori/scip-qvina)
+- [Smina](https://github.com/quantori/scip-smina)
+
+
+## Build 
+
+### BACKGROUND
 
 rDock is written in C++ and makes heavy use of the C++ Standard Template Library (STL).
 All source code is compiled into a single shared library (libRbt.so).
@@ -21,7 +29,7 @@ Ubuntu 32 and 64 bits.
 *  Both with compiler versions higher than 3.3.
 
 
-### PREREQUISITES:
+#### PREREQUISITES:
 
 Make sure you have the following packages installed:
 
@@ -35,9 +43,9 @@ Make sure you have the following packages installed:
 
 After installing these dependencies, please follow the following steps:
 
-## BASIC BUILD INSTRUCTIONS:
+### BASIC BUILD INSTRUCTIONS:
 
-### Step 1) BUILD
+#### Step 1) BUILD
 
 * Change current directory to build folder:
 ```
@@ -56,7 +64,7 @@ change the compiler flags, see below.
 The built libraries and executables are copied to their run-time locations
 (../lib and ../bin) as part of Step 1.
 
-### Step 2) TEST
+#### Step 2) TEST
 
 ```
 $ make test                #Runs rDock unit tests
@@ -66,7 +74,7 @@ If the test has succeed, you are done, enjoy using rDock!
 Otherwise, please check your dependencies and all the previous commands or go to 
 Support Section in the webpage (http://rdock.sourceforge.net) to ask for help.
 
-### Step 3) INSTALL
+#### Step 3) INSTALL
 
 You can either run rDock directly from the build location initial testing), or 
 install the binaries and data files to a new location.
@@ -80,11 +88,16 @@ $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$RBT_ROOT/lib
 $ export PATH=$PATH:$RBT_ROOT/bin
 ```
 
-### OTHER MAKE TARGETS
+#### OTHER MAKE TARGETS
 
 `make src_dist` 		Creates source distribution
 
 `make clean`              Removes all intermediate build files
 
 `make distclean`         Also removes installed libs and exes in ../lib and ../bin
+
+
+## License
+
+rDock is released under [GNU Lesser General Public License, Version 3](license.txt)
 
